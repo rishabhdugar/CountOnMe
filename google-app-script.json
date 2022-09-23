@@ -1,0 +1,183 @@
+//Identifying the spreadsheet using the spreadsheet ID
+var ID = "1qwwu1WsBIjIrEjR-DehTte_jzcJWHoAKYWx7b8HsmIY"
+var SHEET_NAME = "Sheet1"
+
+//index
+
+var numberIndex = 1
+var ownNumberIndex = 2
+var buddyNumberIndex = 4
+
+
+
+//Main Method
+function doPost(e) {
+  var sheet = SpreadsheetApp.openById(ID).getSheetByName(SHEET_NAME);
+    var phone = e.parameter.phone;
+    var targetRowNumber = rowOf(phone, numberIndex, sheet)   
+    //New Number
+        if (targetRowNumber == -1) {
+            //Do nothing 
+            //Send sms only to default contact
+            
+          sendMessage("We could not find any registered buddy, we will send a message to police for your help." , phone);
+    return ContentService.createTextOutput(JSON.stringify("Buddy Not Found")).setMimeType(ContentService.MimeType.JSON);
+        }
+        // Existing Number 
+        else {
+          var buddyNumber = sheet.getRange(targetRowNumber, buddyNumberIndex).getValue();
+          var ownNumber = sheet.getRange(targetRowNumber, ownNumberIndex).getValue();
+          sendMessage("Your friend has requested for urgent HELP , please contact https://wa.me/" + ownNumber ,buddyNumber);
+          //sendIVR();
+        }
+     
+    return ContentService.createTextOutput(JSON.stringify(phone)).setMimeType(ContentService.MimeType.JSON);
+}
+
+
+function testPutValue() {
+    var sheet = SpreadsheetApp.openById(ID).getSheetByName(SHEET_NAME);
+    putValue(sheet, 3, 3, "7388");
+}
+
+function compareEqual(string1, string2) {
+    return string1.toLowerCase() === string2.toLowerCase();
+}
+
+
+function sendSorry(text, waId) {
+    if (validCorp.indexOf(text) > -1 ||
+        validWelcome.indexOf(text) > -1 ||
+        validUserType.indexOf(text) > -1) {
+        //sendMessage(ProcessingMessage, waId);
+    }
+    sendMessage(SorryMessage, waId);
+}
+
+
+function getFirstEmptyRowByColumnArray(spr) {
+
+    var column = spr.getRange('B:B');
+    var values = column.getValues(); // get all data in one call
+    var ct = 0;
+    while (values[ct] && values[ct][0] != "") {
+        ct++;
+    }
+    return (ct + 1);
+}
+
+function getValue(sheet, targetRowNumber, columnNumber) {
+    return sheet.getRange(targetRowNumber, columnNumber).getValue();
+}
+
+function putValue(sheet, targetRowNumber, columnNumber, text) {
+
+    sheet.getRange(targetRowNumber, columnNumber).setValue(text);
+}
+
+function sendIVR(targetCallingNumber){
+    
+      var data = {
+            'From': '',
+            'To': targetCallingNumber.toString(),
+            'CallerId': ''
+        };
+      var headers = {
+        "Authorization": "Basic " + Utilities.base64Encode("get from exotel:")
+        };
+        var options = {
+            'method': 'post',
+            'payload': data,
+            'headers': headers
+        };
+      
+        // sending to Exotel API 
+        var response = UrlFetchApp.fetch('https://api.exotel.com/v1/Accounts/get from exotel/Calls/connect', options); 
+        Logger.log(response); 
+
+}
+
+function rowOf(containingValue, columnToLookInIndex, sheet) {
+    var dataRange = sheet.getDataRange();
+    var values = dataRange.getValues();
+
+    var outRow = -1;
+
+    for (var i = 0; i < values.length; i++) {   
+        if (values[i][columnToLookInIndex] === containingValue || compareEqual(values[i][columnToLookInIndex].toString(), containingValue.toString())) {
+            outRow = i + 1;
+            break;
+        }
+    }
+    return outRow;
+}
+
+function testRowOf() {
+  
+    var sheet = SpreadsheetApp.openById(ID).getSheetByName(SHEET_NAME);
+   var targetRowNumber = rowOf("917388931107", numberIndex, sheet);
+   
+    putValue(sheet, 10, 10, targetRowNumber);    
+}
+
+function testSendMsg() {
+  
+    var sheet = SpreadsheetApp.openById(ID).getSheetByName(SHEET_NAME);
+  var targetRowNumber =2;
+          var ownNumber = sheet.getRange(targetRowNumber, ownNumberIndex).getValue();
+    sendMessage("Your friend has requested for urgent HELP , please contact "+ ownNumber, "917388931107");
+}
+
+function sendMessage(text, waId) {
+    /******
+    
+    WHATSAPP
+    
+    ******/
+    var data = {};
+    var headers = {
+        "Authorization": "Bearer get token from wati.io",
+        "content-type": "application/json"
+    };
+    var options = {
+        'method': 'post',
+        'payload': "",
+        'headers': headers
+    };
+    Logger.log(options);
+    // call WATI api for whatsapp
+    //uncomment later
+    var url = "https://watiserver-url/api/v1/sendSessionMessage/" + waId + "?messageText=" + text
+    var response = UrlFetchApp.fetch(url, options);
+    //var response = "";
+
+    Logger.log(response);
+}
+
+function testSendTemplate() {
+    sendTemplate("bot_payment_link", "samplephone", "default");
+}
+
+function sendTemplate(templateName, numberValue, paramter_value) {
+    var data = {
+        'template_name': templateName,
+        'broadcast_name': templateName,
+        'parameters': "[{'name':'name', 'value':'" + paramter_value + "'}]"
+    };
+    var headers = {
+        "Authorization": "Bearer get token from wati.io",
+        "content-type": "application/json"
+    };
+    var options = {
+        'method': 'post',
+        'payload': JSON.stringify(data),
+        'headers': headers
+    };
+    Logger.log(options);
+    // call WATI api for whatsapp
+    //uncomment later
+    var response = UrlFetchApp.fetch('https://watiserver-url/api/v1/sendTemplateMessage/' + numberValue, options);
+    //var response = "";
+
+    Logger.log(response);
+}
