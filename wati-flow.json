@@ -1,0 +1,242 @@
+{
+	"id": null,
+	"name": "CountOnMe1-HackathonRishabh",
+	"created": null,
+	"flowNodes": [{
+		"interactiveButtonsHeader": {
+			"type": "Text",
+			"text": "",
+			"media": null
+		},
+		"interactiveButtonsBody": "<p>CountOnMe - your urgent <a href=\"https://www.bing.com/ck/a?!&amp;&amp;p=24c786f475b6b841JmltdHM9MTY2MzU0NTYwMCZpZ3VpZD0yMTA2NGY0Ni02NjA5LTZkZmEtMjcxNC01ZTIxNjdhNDZjMmImaW5zaWQ9NTE4NA&amp;ptn=3&amp;hsh=3&amp;fclid=21064f46-6609-6dfa-2714-5e2167a46c2b&amp;psq=sos+smiley&amp;u=a1aHR0cHM6Ly9lbW9qaXBlZGlhLm9yZy9zb3MtYnV0dG9uLw&amp;ntb=1\" target=\"_blank\">🆘 </a>helper is here.</p>\n<p>Let us know if you need help by selecting one of the options below.</p>",
+		"interactiveButtonsFooter": "",
+		"interactiveButtonsItems": [{
+			"id": "iMoPwHe",
+			"buttonText": "🆘 Help Me Now!!🆘 ",
+			"nodeResultId": "main_webhook-jltcj"
+		}, {
+			"id": "kMYuDcS",
+			"buttonText": "Add/Update Buddy ",
+			"nodeResultId": "main_question-mzEcJ"
+		}, {
+			"id": "bzbfisn",
+			"buttonText": "I am safe",
+			"nodeResultId": ""
+		}],
+		"interactiveButtonsUserInputVariable": "",
+		"interactiveButtonsDefaultNodeResultId": "",
+		"id": "main_buttons-bmbic",
+		"flowNodeType": "InteractiveButtons",
+		"flowNodePosition": {
+			"posX": "53",
+			"posY": "158"
+		},
+		"isStartNode": true
+	}, {
+		"googleAccount": {
+			"id": null,
+			"email": null,
+			"hasError": false
+		},
+		"spreadsheet": {
+			"spreadsheetName": null,
+			"spreadsheetId": ""
+		},
+		"sheet": {
+			"sheetName": "Sheet1",
+			"sheetId": ""
+		},
+		"action": "UpdateRow",
+		"newCells": [],
+		"rowReference": {
+			"name": null,
+			"value": null
+		},
+		"conditionResult": {
+			"yResultNodeId": "main_message-nuCep",
+			"nResultNodeId": "main_message-HUzql"
+		},
+		"id": "main_googleSpreadsheet-dfmQi",
+		"flowNodeType": "GoogleSpreadsheet",
+		"flowNodePosition": {
+			"posX": "1144",
+			"posY": "329"
+		},
+		"isStartNode": false
+	}, {
+		"flowReplies": [{
+			"flowReplyType": "Text",
+			"data": "<p>What is your Buddy's name?</p>",
+			"caption": "",
+			"mimeType": ""
+		}],
+		"userInputVariable": "buddy_name",
+		"answerValidation": {
+			"type": "None",
+			"minValue": "",
+			"maxValue": "",
+			"regex": "",
+			"fallback": "",
+			"failsCount": ""
+		},
+		"expectedAnswers": null,
+		"id": "main_question-mzEcJ",
+		"flowNodeType": "Question",
+		"flowNodePosition": {
+			"posX": "431",
+			"posY": "303"
+		},
+		"isStartNode": false
+	}, {
+		"flowReplies": [{
+			"flowReplyType": "Text",
+			"data": "<p>Buddy's Phone?</p>",
+			"caption": "",
+			"mimeType": ""
+		}],
+		"userInputVariable": "buddy_phone",
+		"answerValidation": {
+			"type": "None",
+			"minValue": "",
+			"maxValue": "",
+			"regex": "",
+			"fallback": "",
+			"failsCount": ""
+		},
+		"expectedAnswers": null,
+		"id": "main_question-fANLB",
+		"flowNodeType": "Question",
+		"flowNodePosition": {
+			"posX": "802",
+			"posY": "301"
+		},
+		"isStartNode": false
+	}, {
+		"flowReplies": [{
+			"flowReplyType": "Text",
+			"data": "<p>Thank you for registering your trusted buddy with us!<br>\n<br>\nHere's the summary of your contact!<br>\nBuddy Name: @buddy_name</p>\n<p>Buddy Number : @buddy_phone</p>\n<p><em>We will make an emergency phone/whatsapp to this number if you need any urgent help.</em></p>",
+			"caption": "",
+			"mimeType": ""
+		}],
+		"id": "main_message-nuCep",
+		"flowNodeType": "Message",
+		"flowNodePosition": {
+			"posX": "1812",
+			"posY": "136"
+		},
+		"isStartNode": false
+	}, {
+		"googleAccount": {
+			"id": null,
+			"email": null,
+			"hasError": false
+		},
+		"spreadsheet": {
+			"spreadsheetName": null,
+			"spreadsheetId": ""
+		},
+		"sheet": {
+			"sheetName": "Sheet1",
+			"sheetId": ""
+		},
+		"action": "InsertNewRow",
+		"newCells": [],
+		"rowReference": {
+			"name": null,
+			"value": null
+		},
+		"conditionResult": {
+			"yResultNodeId": "main_message-nuCep",
+			"nResultNodeId": null
+		},
+		"id": "main_googleSpreadsheet-xAfOx",
+		"flowNodeType": "GoogleSpreadsheet",
+		"flowNodePosition": {
+			"posX": "1479",
+			"posY": "534"
+		},
+		"isStartNode": false
+	}, {
+		"flowReplies": [],
+		"id": "main_message-HUzql",
+		"flowNodeType": "Message",
+		"flowNodePosition": {
+			"posX": "1128",
+			"posY": "477"
+		},
+		"isStartNode": false
+	}, {
+		"methodType": "Post",
+		"url": "https://script.google.com/macros/s/AKfycbyrJ6UEMB5SujRnSURBF2_GOdRWkggXVEVeThqhtwatlmt0q4PZfpbYiIIkOzd-LU5t/exec?phone={{phone}}",
+		"headers": [],
+		"body": "{\n\"phone\":\"{{phone}}\"\n}",
+		"testVariables": [],
+		"responseVariables": [],
+		"expectedStatuses": [],
+		"id": "main_webhook-jltcj",
+		"flowNodeType": "Webhook",
+		"flowNodePosition": {
+			"posX": "430",
+			"posY": "-15"
+		},
+		"isStartNode": false
+	}, {
+		"flowReplies": [{
+			"flowReplyType": "Text",
+			"data": "<p>We have notified your buddy and police about your emergency.</p>",
+			"caption": "",
+			"mimeType": ""
+		}],
+		"id": "main_message-pKmUY",
+		"flowNodeType": "Message",
+		"flowNodePosition": {
+			"posX": "826",
+			"posY": "0"
+		},
+		"isStartNode": false
+	}],
+	"flowEdges": [{
+		"id": "reactflow__edge-main_question-mzEcJ-main_question-fANLB",
+		"sourceNodeId": "main_question-mzEcJ",
+		"targetNodeId": "main_question-fANLB"
+	}, {
+		"id": "reactflow__edge-main_googleSpreadsheet-dfmQi__true-main_message-nuCep",
+		"sourceNodeId": "main_googleSpreadsheet-dfmQi__true",
+		"targetNodeId": "main_message-nuCep"
+	}, {
+		"id": "reactflow__edge-main_googleSpreadsheet-xAfOx__true-main_message-nuCep",
+		"sourceNodeId": "main_googleSpreadsheet-xAfOx__true",
+		"targetNodeId": "main_message-nuCep"
+	}, {
+		"id": "reactflow__edge-main_googleSpreadsheet-dfmQi__false-main_message-HUzql",
+		"sourceNodeId": "main_googleSpreadsheet-dfmQi__false",
+		"targetNodeId": "main_message-HUzql"
+	}, {
+		"id": "reactflow__edge-main_message-HUzql-main_googleSpreadsheet-xAfOx",
+		"sourceNodeId": "main_message-HUzql",
+		"targetNodeId": "main_googleSpreadsheet-xAfOx"
+	}, {
+		"id": "reactflow__edge-main_question-fANLB-main_googleSpreadsheet-dfmQi",
+		"sourceNodeId": "main_question-fANLB",
+		"targetNodeId": "main_googleSpreadsheet-dfmQi"
+	}, {
+		"id": "reactflow__edge-main_buttons-bmbic__kMYuDcS-main_question-mzEcJ",
+		"sourceNodeId": "main_buttons-bmbic__kMYuDcS",
+		"targetNodeId": "main_question-mzEcJ"
+	}, {
+		"id": "reactflow__edge-main_buttons-bmbic__iMoPwHe-main_webhook-jltcj",
+		"sourceNodeId": "main_buttons-bmbic__iMoPwHe",
+		"targetNodeId": "main_webhook-jltcj"
+	}, {
+		"id": "reactflow__edge-main_webhook-jltcj-main_message-pKmUY",
+		"sourceNodeId": "main_webhook-jltcj",
+		"targetNodeId": "main_message-pKmUY"
+	}],
+	"lastUpdated": "2022-09-20T06:48:47.895Z",
+	"transform": {
+		"posX": "564.5903039486708",
+		"posY": "1333.8515512727324",
+		"zoom": "0.5046152944330471"
+	},
+	"isPro": true
+}
